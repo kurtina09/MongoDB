@@ -34,12 +34,7 @@ var toInsert = {
 db.Hospital.insert(toInsert);
 
 db.Hospital.createIndex( 
-    {
-    "hospitalID": 1 
-    },
-    { 
-    unique: true 
-    }
+    { "hospitalID": 1 }, { unique: true }
 );
 
 var hospital2 = {
@@ -221,39 +216,98 @@ var patO = {
 };
 
 //updates
-db.Hospital.update( {hospitalID: 100}, { $push: {hospitalPatients: {$each: [patA,patB,patC]} } } );
-db.Hospital.update( {hospitalID: 200}, { $push: {hospitalPatients: {$each: [patD, patE, patF]} } } );
-db.Hospital.update( {hospitalID: 300}, { $push: {hospitalPatients: {$each: [patG, patH, patI]} } } );
-db.Hospital.update( {hospitalID: 400}, { $push: {hospitalPatients: {$each: [patJ, patK, patL]} } } );
-db.Hospital.update( {hospitalID: 500}, { $push: {hospitalPatients: {$each: [patM, patN, patO]} } } );
+db.Hospital.update( 
+    {hospitalID: 100}, 
+    {$push: 
+        {
+            hospitalPatients: {
+                $each: [patA,patB,patC]
+            } 
+        } 
+    } 
+);
+
+db.Hospital.update( 
+    {hospitalID: 200}, 
+    {$push: 
+        {
+            hospitalPatients: {
+            $each: [patD, patE, patF]
+            } 
+        } 
+    } 
+);
+
+db.Hospital.update( 
+    {hospitalID: 300}, 
+    {$push: 
+        {
+            hospitalPatients: {
+                $each: [patG, patH, patI]
+            } 
+        } 
+    } 
+);
+
+db.Hospital.update( 
+    {hospitalID: 400}, 
+    {$push: 
+        {
+            hospitalPatients: {
+                $each: [patJ, patK, patL]
+            } 
+        } 
+    } 
+);
+
+db.Hospital.update( 
+    {hospitalID: 500}, 
+    {$push: 
+        {
+            hospitalPatients: {
+                $each: [patM, patN, patO]
+            } 
+        } 
+    } 
+);
 
 
-print("\n                   *Hospital Lists*                   ");
+
+print("\n \t*Hospital Lists*");
+print("------------------------------------------------------------");
 db.Hospital.find().forEach( function(printHosp) { print("Hospital Name: " + printHosp.hospitalName); } ); 
+print("------------------------------------------------------------");
 
-print("\n                 *Hospital Names and Capacity*                 ");
-db.Hospital.find().forEach( function(printHosp) { print("Hospital Name: " + printHosp.hospitalName + "  \t|  Hospital Capacity: " + printHosp.hospitalCapacity);} ); 
+print("\n \t*Hospital Names and Capacity*");
+print("------------------------------------------------------------");
+db.Hospital.find().forEach( function(printHosp) { print("Hospital Name: " + printHosp.hospitalName + " \n  Hospital Capacity: " + printHosp.hospitalCapacity + "\n");} ); 
+print("------------------------------------------------------------");
 
-print("\n                 *Hospitals With More than 20 Doctors*                   ");
-db.Hospital.find().forEach( function(printHosp) { if(printHosp.totalDoctors > 20) { print("Hospital Name: " + printHosp.hospitalName + "  \t|  Total Doctors: " + printHosp.totalDoctors); } } ); 
+print("\n \t*Hospitals With More than 20 Doctors*");
+print("------------------------------------------------------------");
+db.Hospital.find().forEach( function(printHosp) { if(printHosp.totalDoctors > 20) { print("Hospital Name: " + printHosp.hospitalName + " \n  Total Doctors: " + printHosp.totalDoctors + "\n"); } } ); 
+print("------------------------------------------------------------");
 
-print("\n                 *Hospital Name and Patients With Balance > 0*                   ");
+print("\n \t*Hospital Name and Patients With Balance > 0*");
+print("------------------------------------------------------------");
 db.Hospital.find().forEach(
     function(printHosp) {
-        printHosp.hospitalPatients.forEach( function(printPatient){ if(printPatient.patientBalance > 0.00) { print("Hospital Name: " + printHosp.hospitalName + " \t| Patient Name: " + printPatient.patientName +   " \t|  Total Balance: " + printPatient.patientBalance); } }
+        printHosp.hospitalPatients.forEach( function(printPatient){ if(printPatient.patientBalance > 0.00) { print("Hospital Name: " + printHosp.hospitalName + " \n Patient Name: " + printPatient.patientName +   " \n  Total Balance: " + printPatient.patientBalance + "\n"); } }
         );
     }
 ); 
+print("------------------------------------------------------------");
 
-print("\n                 *Hospital Name and Patient Balances (Zero and Negative Balances) *                 ");
+print("\n \t*Hospital Name and Patient Balances (Zero and Negative Balances) *");
+print("------------------------------------------------------------");
 db.Hospital.find().forEach(
     function(printHosp) {
         printHosp.hospitalPatients.forEach(
             function(printPatient){
-                if(printPatient.patientBalance <= 0.00){ print("Hospital Name: " + printHosp.hospitalName + " \t| Patient Name: " + printPatient.patientName + "  \t|  Total Balance: " + printPatient.patientBalance); }
+                if(printPatient.patientBalance <= 0.00){ print("Hospital Name: " + printHosp.hospitalName + " \n Patient Name: " + printPatient.patientName + " \n  Total Balance: " + printPatient.patientBalance + "\n"); }
             }
         );
     }
 );
-
+print("------------------------------------------------------------");
 db.Hospital.drop();
